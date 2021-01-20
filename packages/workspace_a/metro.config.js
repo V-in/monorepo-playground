@@ -1,11 +1,14 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
+const getWorkspaces = require('get-yarn-workspaces');
+const path = require('path');
+const workspaces = getWorkspaces(__dirname);
+
+const watchFolders = [
+  path.resolve(__dirname, '..', '..', 'node_modules'),
+  ...workspaces.filter((workspaceDir) => !(workspaceDir === __dirname)),
+];
 
 module.exports = {
+  watchFolders,
   transformer: {
     getTransformOptions: async () => ({
       transform: {
@@ -13,5 +16,12 @@ module.exports = {
         inlineRequires: false,
       },
     }),
+  },
+  resolver: {
+    // Always resolve these from current module, ignore dev dependencies
+    extraNodeModules: {
+      'react-native': path.resolve(__dirname, 'node_modules', 'react-native'),
+      react: path.resolve(__dirname, 'node_modules', 'react'),
+    },
   },
 };
