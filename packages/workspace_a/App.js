@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,6 +21,8 @@ import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
 import CoreApp from '@monorepo/core';
 
 const App = () => {
+  const [state, setState] = useState('initial state');
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -30,7 +32,7 @@ const App = () => {
           style={styles.scrollView}>
           <Header />
           <View style={styles.body}>
-            <Text>Hello from root app</Text>
+            <Text>Hello from root app {state}</Text>
             <CoreApp />
           </View>
         </ScrollView>
